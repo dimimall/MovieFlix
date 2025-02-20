@@ -7,16 +7,6 @@
 
 import SwiftUI
 
-struct LessonDetailsViewControllerWrapper: UIViewControllerRepresentable {
-    typealias UIViewControllerType = UIViewController
-
-    func makeUIViewController(context: UIViewControllerRepresentableContext<LessonDetailsViewControllerWrapper>) -> UIViewController {
-        let viewController = ViewController()
-        return viewController
-    }
-
-    func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<LessonDetailsViewControllerWrapper>) {}
-}
 
 struct SwiftUIViewDetails: View {
     
@@ -83,27 +73,21 @@ struct SwiftUIViewDetails: View {
                     ScrollView(.horizontal) {
                         LazyHStack{
                             VStack {
-                                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(similar?.results[0].backdrop_path ?? "9CWvjeawj9rYRFasyrNjVsqhR48.jpg")")) { image in
+                                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w200/\(similar?.results[0].backdrop_path ?? "9CWvjeawj9rYRFasyrNjVsqhR48.jpg")")) { image in
                                     image.resizable()
                                 } placeholder: {
                                     Color.red
                                 }
                                 .frame(width: 80, height: 80)
-                                
-                                Text("\(similar?.results[0].title ?? "")")
-                                StarsView(rating: similar?.results[0].vote_average as? CGFloat ?? 2.6, maxRating: 10)
                                 
                             }
                             VStack {
-                                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(similar?.results[1].backdrop_path ?? "9CWvjeawj9rYRFasyrNjVsqhR48.jpg")")) { image in
+                                AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w200/\(similar?.results[1].backdrop_path ?? "9CWvjeawj9rYRFasyrNjVsqhR48.jpg")")) { image in
                                     image.resizable()
                                 } placeholder: {
                                     Color.red
                                 }
                                 .frame(width: 80, height: 80)
-                                
-                                Text("\(similar?.results[1].title ?? "")")
-                                StarsView(rating: similar?.results[1].vote_average as? CGFloat ?? 2.6, maxRating: 10)
                                 
                             }
                         }
@@ -112,31 +96,19 @@ struct SwiftUIViewDetails: View {
                 
                 Section {
                     Text("Movie Reviews")
-                    ScrollView(.horizontal) {
-                        LazyHStack{
+                    ScrollView(.vertical) {
+                        LazyVStack{
                             if ((reviews?.results.count) ?? 0 > 0) {
                                 VStack {
-                                    AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(reviews?.results[0].author_details?.avatar_path ?? "9CWvjeawj9rYRFasyrNjVsqhR48.jpg")")) { image in
-                                        image.resizable()
-                                    } placeholder: {
-                                        Color.red
-                                    }
-                                    .frame(width: 80, height: 80)
+                                    Text("\(reviews?.results[0].author_details?.username ?? " ")").font(.largeTitle)
                                     
-                                    Text("\(reviews?.results[0].author ?? "")")
-                                    StarsView(rating: reviews?.results[0].author_details?.rating as? Double ?? 2.6, maxRating: 10)
-                                    
+                                    Text(AttributedString(reviews?.results[0].content ?? ""))
                                 }
                                 VStack {
-                                    AsyncImage(url: URL(string: "https://image.tmdb.org/t/p/w500/\(reviews?.results[1].author_details?.avatar_path ?? "9CWvjeawj9rYRFasyrNjVsqhR48.jpg")")) { image in
-                                        image.resizable()
-                                    } placeholder: {
-                                        Color.red
-                                    }
-                                    .frame(width: 80, height: 80)
-                                    
-                                    Text("\(reviews?.results[1].author ?? "")")
-                                    StarsView(rating: reviews?.results[1].author_details?.rating as? Double ?? 0.0, maxRating: 10)
+                                    Text("\(reviews?.results[1].author_details?.username ?? " ")").font(.largeTitle)
+
+
+                                    Text(AttributedString(reviews?.results[1].content ?? ""))
                                 }
                             }
                         }

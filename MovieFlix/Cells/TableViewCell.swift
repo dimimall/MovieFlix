@@ -7,6 +7,7 @@
 
 import UIKit
 import CoreData
+import Foundation
 
 class TableViewCell: UITableViewCell {
 

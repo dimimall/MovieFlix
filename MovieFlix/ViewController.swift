@@ -49,6 +49,7 @@ class ViewController: UIViewController, SkeletonDisplayable{
         tableView.tableFooterView = UIView()
         tableView.estimatedRowHeight = 210.0
         tableView.rowHeight = 210.0
+        tableView.separatorStyle = .singleLine
         
         searchBar.delegate = self
         
@@ -118,8 +119,11 @@ extension ViewController: UITableViewDataSource {
         
         let cell = tableView.dequeueReusableCell(withIdentifier: cellReuseIdentifier, for: indexPath) as! TableViewCell
         
-        
         cell.imageCell.imageFromServerURL("https://image.tmdb.org/t/p/original/\(searchedResults[indexPath.row].backdrop_path!)", placeHolder: UIImage(systemName: "star"))
+        cell.imageCell.layer.borderColor = UIColor.orange.cgColor
+        cell.imageCell.layer.borderWidth = 2
+        cell.imageCell.layer.cornerRadius = 6
+        
         cell.imageUrl = "https://image.tmdb.org/t/p/original\(searchedResults[indexPath.row].backdrop_path!)"
         cell.titleCell.text = searchedResults[indexPath.row].original_title
         cell.releaseDateCell.text = searchedResults[indexPath.row].release_date
